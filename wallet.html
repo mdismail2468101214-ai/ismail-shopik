@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ismail Shop - ওয়ালেট</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>body { font-family: 'Hind Siliguri', sans-serif; }</style>
+</head>
+<body class="bg-slate-100 pb-10">
+
+    <header class="bg-gradient-to-r from-purple-900 via-red-500 to-orange-500 p-4 text-white shadow-lg">
+        <div class="flex items-center space-x-3">
+            <a href="index.html" class="text-lg"><i class="fa-solid fa-arrow-left"></i></a>
+            <h1 class="text-lg font-bold">পেমেন্ট মেথড</h1>
+        </div>
+    </header>
+
+    <div class="p-4 space-y-4">
+        <div class="bg-white p-4 rounded-2xl shadow-sm border-l-8 border-pink-600 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center font-black text-pink-600">Bk</div>
+                <div>
+                    <h3 class="font-bold text-gray-800">বিকাশ পার্সোনাল</h3>
+                    <p class="text-xs text-gray-500 font-bold">01307396193</p>
+                </div>
+            </div>
+            <button onclick="navigator.clipboard.writeText('01307396193'); alert('বিকাশ নাম্বার কপি হয়েছে!');" class="text-pink-600"><i class="fa-solid fa-copy"></i></button>
+        </div>
+
+        <div class="bg-white p-4 rounded-2xl shadow-sm border-l-8 border-red-500 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center font-black text-red-500">Ng</div>
+                <div>
+                    <h3 class="font-bold text-gray-800">নগদ পার্সোনাল</h3>
+                    <p class="text-xs text-gray-500 font-bold">01307396193</p>
+                </div>
+            </div>
+            <button onclick="navigator.clipboard.writeText('01307396193'); alert('নগদ নাম্বার কপি হয়েছে!');" class="text-red-500"><i class="fa-solid fa-copy"></i></button>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 mt-6">
+            <h3 class="text-sm font-black text-gray-700 mb-4 uppercase">পেমেন্ট রিকোয়েস্ট পাঠান</h3>
+            <form id="paymentForm" class="space-y-4">
+                <input type="text" name="number" placeholder="আপনার বিকাশ/নগদ নম্বর" required class="w-full p-4 bg-slate-50 rounded-xl text-sm border outline-none">
+                <input type="text" name="trxid" placeholder="ট্রানজেকশন আইডি (TrxID)" required class="w-full p-4 bg-slate-50 rounded-xl text-sm border outline-none">
+                <input type="number" name="amount" placeholder="কত টাকা পাঠিয়েছেন?" required class="w-full p-4 bg-slate-50 rounded-xl text-sm border outline-none">
+                <button type="submit" class="w-full py-4 bg-purple-900 text-white rounded-xl font-bold shadow-xl">সাবমিট করুন</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('paymentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var url = "আপনার_WEB_APP_URL_এখানে_দিন"; 
+            fetch(url, { method: 'POST', body: new FormData(this) })
+            .then(res => alert('ধন্যবাদ! আপনার পেমেন্ট রিকোয়েস্টটি জমা হয়েছে।'));
+        });
+    </script>
+</body>
+</html>
+

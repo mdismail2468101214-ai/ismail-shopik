@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ismail Shop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind_Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    <script>
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Hind Siliguri', sans-serif; }
+        #sidebar { transition: transform 0.3s ease-in-out; }
+        .bg-user-image {
+            background-image: linear-gradient(to bottom, rgba(249, 250, 251, 0.75), rgba(249, 250, 251, 0.85)), url('https://i.ibb.co.com/HDDwCM8J/image.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+<body class="bg-user-image select-none relative overflow-x-hidden pb-24">
+
+    <div id="overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-50 hidden opacity-0 transition-opacity duration-300"></div>
+
+    <div id="sidebar" class="fixed top-0 left-0 bottom-0 w-72 bg-white/95 backdrop-blur-md z-50 shadow-2xl -translate-x-full flex flex-col justify-between">
+        <div>
+            <div class="bg-gradient-to-r from-purple-900 via-red-500 to-orange-500 p-5 text-white relative">
+                <button onclick="toggleSidebar()" class="absolute top-4 right-4 text-white text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <div class="flex items-center space-x-3 mt-4">
+                    <img src="https://i.ibb.co.com/HDDwCM8J/image.jpg" class="w-12 h-12 rounded-full border-2 border-white shadow-md object-cover">
+                    <div>
+                        <h3 class="font-bold text-sm">Ismail Hossain</h3>
+                        <p class="text-[10px] text-purple-100">User ID: #54821</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-4 space-y-2">
+                <a href="index.html" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-100/50 rounded-xl text-xs font-bold">
+                    <i class="fa-solid fa-house text-purple-600 text-sm w-5"></i> <span id="txt-nav-home"></span>
+                </a>
+                <a href="wallet.html" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-100/50 rounded-xl text-xs font-bold">
+                    <i class="fa-solid fa-wallet text-orange-500 text-sm w-5"></i> <span id="txt-nav-wallet"></span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-100/50 rounded-xl text-xs font-bold">
+                    <i class="fa-solid fa-bullhorn text-blue-500 text-sm w-5"></i> <span id="txt-nav-notice"></span>
+                </a>
+                <a href="support.html" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-100/50 rounded-xl text-xs font-bold">
+                    <i class="fa-solid fa-headset text-green-500 text-sm w-5"></i> <span id="txt-nav-support"></span>
+                </a>
+            </div>
+        </div>
+
+        <div class="p-4 border-t border-gray-100">
+            <button onclick="logout()" class="w-full flex items-center justify-center space-x-2 py-2.5 bg-red-50 text-red-600 rounded-xl text-xs font-bold">
+                <i class="fa-solid fa-right-from-bracket"></i> <span id="txt-nav-logout"></span>
+            </button>
+        </div>
+    </div>
+
+    <header class="bg-gradient-to-r from-purple-900 via-red-500 to-orange-500 p-4 flex justify-between items-center text-white shadow-md sticky top-0 z-40">
+        <div class="flex items-center space-x-3">
+            <i onclick="toggleSidebar()" class="fa-solid fa-bars text-xl cursor-pointer"></i>
+            <h1 class="text-lg font-bold tracking-wider">ISMAIL SHOP</h1>
+        </div>
+        <img src="https://i.ibb.co.com/HDDwCM8J/image.jpg" onclick="toggleSidebar()" class="w-9 h-9 rounded-full border border-white/50 shadow-sm object-cover cursor-pointer">
+    </header>
+
+    <div class="mx-4 mt-4 p-4 bg-white/90 backdrop-blur-md rounded-2xl shadow-md border border-white/40 flex justify-between items-center">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-lg">
+                <i class="fa-solid fa-money-bill-wave"></i>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-500 font-bold uppercase" id="txt-bal-label"></p>
+                <h3 class="text-lg font-extrabold text-gray-800">৳ 520.00</h3>
+            </div>
+        </div>
+        <div class="h-8 w-[1px] bg-gray-200"></div>
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center text-lg">
+                <i class="fa-solid fa-star"></i>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-500 font-bold uppercase" id="txt-pts-label"></p>
+                <h3 class="text-lg font-extrabold text-gray-800">1,250 <span class="text-xs font-medium text-gray-400">Pts</span></h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="mx-4 mt-3 bg-red-50 border border-red-200 rounded-xl p-2.5 flex items-center space-x-2 shadow-sm">
+        <div class="bg-red-500 text-white text-[10px] font-black px-2 py-1 rounded-md flex items-center space-x-1 animate-pulse">
+            <i class="fa-solid fa-circle-exclamation"></i> <span id="txt-marquee-title"></span>
+        </div>
+        <div class="flex-1 overflow-hidden">
+            <marquee class="text-xs text-red-700 font-bold" scrollamount="4" id="txt-marquee-body"></marquee>
+        </div>
+    </div>
+
+    <div class="m-4 p-5 bg-gradient-to-br from-blue-900 to-indigo-950 rounded-2xl text-white relative overflow-hidden shadow-lg">
+        <h2 class="text-orange-400 font-semibold text-sm" id="txt-banner-sub"></h2>
+        <h1 class="text-2xl font-extrabold my-1 tracking-wide">ISMAIL SHOP</h1>
+        <p class="text-[11px] text-gray-300 mt-2" id="txt-banner-desc1"></p>
+        <p class="text-[11px] text-yellow-400 font-medium" id="txt-banner-desc2"></p>
+        <img src="https://i.ibb.co.com/HDDwCM8J/image.jpg" class="absolute right-4 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full border-2 border-white shadow-md object-cover">
+    </div>
+
+    <div class="mx-4 my-2 grid grid-cols-4 gap-2">
+        <a class="flex items-center justify-center space-x-1 p-2 bg-white/80 backdrop-blur-sm rounded-lg shadow-sm text-[10px] font-medium text-gray-700">
+            <i class="fa-brands fa-facebook text-blue-600 text-sm"></i> <span>Facebook</span>
+        </a>
+        <a class="flex items-center justify-center space-x-1 p-2 bg-white/80 backdrop-blur-sm rounded-lg shadow-sm text-[10px] font-medium text-gray-700">
+            <i class="fa-brands fa-youtube text-red-600 text-sm"></i> <span>YouTube</span>
+        </a>
+        <a class="flex items-center justify-center space-x-1 p-2 bg-white/80 backdrop-blur-sm rounded-lg shadow-sm text-[10px] font-medium text-gray-700">
+            <i class="fa-brands fa-telegram text-sky-500 text-sm"></i> <span>Telegram</span>
+        </a>
+        <a class="flex items-center justify-center space-x-1 p-2 bg-white/80 backdrop-blur-sm rounded-lg shadow-sm text-[10px] font-medium text-gray-700">
+            <i class="fa-brands fa-whatsapp text-green-500 text-sm"></i> <span>WhatsApp</span>
+        </a>
+    </div>
+
+    <div class="mx-4 my-3 grid grid-cols-2 gap-3">
+        <div onclick="alert('আজকের ডেইলি বোনাস ৫০ পয়েন্ট আপনার অ্যাকাউন্টে যোগ হয়েছে!')" class="p-3 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl text-white shadow-md flex items-center space-x-3 cursor-pointer active:scale-95 transition-all">
+            <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center text-lg">
+                <i class="fa-solid fa-gift text-yellow-300"></i>
+            </div>
+            <div>
+                <h4 class="text-xs font-bold" id="txt-bonus-title"></h4>
+                <p class="text-[9px] text-purple-200" id="txt-bonus-sub"></p>
+            </div>
+        </div>
+        <a href="spin.html" class="p-3 bg-gradient-to-r from-amber-500 to-orange-600 rounded-2xl text-white shadow-md flex items-center space-x-3 cursor-pointer active:scale-95 transition-all block">
+            <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center text-lg">
+                <i class="fa-solid fa-dharmachakra animate-spin"></i>
+            </div>
+            <div>
+                <h4 class="text-xs font-bold" id="txt-spin-title"></h4>
+                <p class="text-[9px] text-amber-100" id="txt-spin-sub"></p>
+            </div>
+        </a>
+    </div>
+
+    <div class="p-4 bg-white/40 backdrop-blur-xs mx-4 my-2 rounded-2xl shadow-sm border border-white/20">
+        <h3 class="text-xs font-black text-gray-800 mb-3 uppercase tracking-wider pl-1 border-l-4 border-orange-500" id="txt-service-head"></h3>
+        <div class="grid grid-cols-4 gap-y-5 gap-x-3 text-center">
+            <div class="flex flex-col items-center cursor-pointer active:scale-95 transition-transform">
+                <div class="w-12 h-12 bg-gradient-to-b from-orange-400 to-red-500 rounded-xl flex items-center justify-center text-white text-lg shadow-md">
+                    <i class="fa-solid fa-mobile-screen-button"></i>
+                </div>
+                <span class="text-[9px] font-bold mt-1 text-gray-800 whitespace-nowrap" id="s1"></span>
+            </div>
+            <a href="drive.html" class="flex flex-col items-center cursor-pointer active:scale-95 transition-transform">
+                <div class="w-12 h-12 bg-gradient-to-b from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center text-white text-lg shadow-md">
+                    <i class="fa-solid fa-box-open"></i>
+                </div>
+                <span class="text-[9px] font-bold mt-1 text-gray-800 whitespace-nowrap" id="s2"></span>
+            </a>
+            <div class="flex flex-col items-center cursor-pointer active:scale-95 transition-transform">
+                <div class="w-12 h-12 bg-gradient-to-b from-yellow-400 to-amber-500 rounded-xl flex items-center justify-center text-white text-lg shadow-md">
+                    <i class="fa-solid fa-store"></i>
+                </div>
+                <span class="text-[9px] font-bold mt-1 text-gray-800 whitespace-nowrap" id="s3"></span>
+            </div>
+            <div class="flex flex-col items-center cursor-pointer active:scale-95 transition-transform">
+                <div class="w-12 h-12 bg-gradient-to-b from-teal-400 to-emerald-500 rounded-xl flex items-center justify-center text-white text-lg shadow-md">
+                    <i class="fa-solid fa-briefcase"></i>
+                </div>
+                <span class="text-[9px] font-bold mt-1 text-gray-800 whitespace-nowrap" id="s4"></span>
+            </div>
+            <div class="flex flex-col items-center cursor-pointer active:scale-95 transition-transform">
+                <div class="w-12 h-12 bg-gradient-to-b from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-white text-lg shadow-md">
+                    <i class="fa-solid fa-file-arrow-up"></i>
+                </div>
+                <span class="text-[9px] font-bold mt-1 text-gray-800 whitespace-nowrap" id="s5"></span>
+            </div>
+            <div class="flex flex-col items-center cursor-pointer active:scale-95 transition-transform">
+                <div class="w-12 h-12 bg-gradient-to-b from-red-400 to-red-600 rounded-xl flex items-center justify-center text-white text-lg shadow-md">
+                    <i class="fa-regular fa-envelope"></i>
+                </div>
+                <span class="text-[9px] font-bold mt-1 text-gray-800 whitespace-nowrap" id="s6"></span>
+            </div>
+            <div class="flex flex-col items-center cursor-pointer active:scale-95 transition-transform">
+                <div class="w-12 h-12 bg-gradient-to-b from-blue-500 to-blue-700 rounded-xl flex items-center justify-center text-white text-lg shadow-md">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </div>
+                <span class="text-[9px] font-bold mt-1 text-gray-800 whitespace-nowrap" id="s7"></span>
+            </div>
+            <a href="support.html" class="flex flex-col items-center cursor-pointer active:scale-95 transition-transform">
+                <div class="w-12 h-12 bg-gradient-to-b from-green-400 to-emerald-600 rounded-xl flex items-center justify-center text-white text-lg shadow-md">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+                <span class="text-[9px] font-bold mt-1 text-gray-800 whitespace-nowrap" id="s8"></span>
+            </a>
+        </div>
+    </div>
+
+    <div class="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-purple-900 via-red-500 to-orange-500 h-16 flex justify-around items-center text-white border-t border-gray-200 shadow-2xl z-40 px-2">
+        <a href="index.html" class="flex flex-col items-center text-yellow-300">
+            <i class="fa-solid fa-house text-lg"></i>
+            <span class="text-[10px] mt-0.5" id="b1"></span>
+        </a>
+        <div class="flex flex-col items-center opacity-80 cursor-pointer">
+            <i class="fa-solid fa-user-tie text-lg"></i>
+            <span class="text-[10px] mt-0.5" id="b2"></span>
+        </div>
+        <div class="flex flex-col items-center -mt-6">
+            <div class="w-14 h-14 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center border-4 border-gray-50 shadow-xl text-xl cursor-pointer">
+                <i class="fa-solid fa-basket-shopping text-white"></i>
+            </div>
+            <span class="text-[10px] mt-1 text-gray-800 font-bold" id="b3"></span>
+        </div>
+        <a href="wallet.html" class="flex flex-col items-center opacity-80 text-white">
+            <i class="fa-solid fa-wallet text-lg"></i>
+            <span class="text-[10px] mt-0.5" id="b4"></span>
+        </a>
+        <div class="flex flex-col items-center opacity-80 cursor-pointer">
+            <i class="fa-solid fa-users text-lg"></i>
+            <span class="text-[10px] mt-0.5" id="b5"></span>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('txt-nav-home').innerText = "হোমপেজ";
+        document.getElementById('txt-nav-wallet').innerText = "মাই ওয়ালেট";
+        document.getElementById('txt-nav-notice').innerText = "গুরুত্বপূর্ণ নোটিশ";
+        document.getElementById('txt-nav-support').innerText = "হেল্পলাইন ও সাপোর্ট";
+        document.getElementById('txt-nav-logout').innerText = "লগআউট করুন";
+        
+        document.getElementById('txt-bal-label').innerText = "আমার ব্যালেন্স";
+        document.getElementById('txt-pts-label').innerText = "মাই পয়েন্ট";
+        
+        document.getElementById('txt-marquee-title').innerText = "নোটিশ:";
+        document.getElementById('txt-marquee-body').innerText = "আমাদের ISMAIL SHOP-এ স্বাগতম! প্রতিদিনের ১০০ টাকার স্পিন বোনাস নিতে ডেইলি টাস্ক সেকশনে ভিজিট করুন। যেকোনো সমস্যায় হেল্পলাইনে যোগাযোগ করুন।";
+        
+        document.getElementById('txt-banner-sub').innerText = "স্বপ্ন হবে সত্যি!";
+        document.getElementById('txt-banner-desc1').innerText = "আপনার online আয়ের ডিজিটাল সঙ্গী";
+        document.getElementById('txt-banner-desc2').innerText = "পেশাদার online আয়ের প্ল্যাটফর্ম";
+        
+        document.getElementById('txt-bonus-title').innerText = "데일리 বোনাস";
+        document.getElementById('txt-bonus-sub').innerText = "প্রতিদিন ক্লেম করুন";
+        document.getElementById('txt-spin-title').innerText = "লাকি স্পিন";
+        document.getElementById('txt-spin-sub').innerText = "ভাগ্য পরীক্ষা করুন";
+        
+        document.getElementById('txt-service-head').innerText = "আমাদের সার্ভিসসমূহ";
+        document.getElementById('s1').innerText = "মোবাইল রিচার্জ";
+        document.getElementById('s2').innerText = "ড্রাইভ অফার";
+        document.getElementById('s3').innerText = "রিসেলিং";
+        document.getElementById('s4').innerText = "মাইক্রো জব";
+        document.getElementById('s5').innerText = "জব পোস্ট";
+        document.getElementById('s6').innerText = "জিমেইল সেল";
+        document.getElementById('s7').innerText = "ফেসবুক সেল";
+        document.getElementById('s8').innerText = "হেল্প ও সাপোর্ট";
+        
+        document.getElementById('b1').innerText = "হোম";
+        document.getElementById('b2').innerText = "এজেন্ট";
+        document.getElementById('b3').innerText = "প্রোডাক্ট";
+        document.getElementById('b4').innerText = "ওয়ালেট";
+        document.getElementById('b5').innerText = "নেটওয়ার্ক";
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.add('opacity-100'), 10);
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.remove('opacity-100');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            }
+        }
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            window.location.reload();
+        }
+    </script>
+</body>
+</html>
+
